@@ -18,7 +18,7 @@ provider "azurerm" {
 # the two text fields are the resource type and the resource name
 # these are combined for the ID - azurerm_resource_group.rg
 resource "azurerm_resource_group" "rg" {
-  name     = "myTFResourceGroup"
+  name     = var.resource_group_name
   location = "westus2"
   tags = {
     Environment = "Terraform Getting Started"
