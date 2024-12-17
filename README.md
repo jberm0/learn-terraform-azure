@@ -61,7 +61,9 @@ Can use local references or "${}" to get values
 ### variables.tf
 
 Contain variables that can be used in plans, with defaults
+
 To use the variables in a plan, use `-var 'var_name=var_value'`
+
 This enables the separation of variables to use across environments
 
 <pre>
@@ -75,7 +77,11 @@ variable "var_name" {
 ### terraform.tfstate
 
 Terraform maintains the state of the resources in the tfstate file (and the tfstate.backup file), as well as metadata
+
 This provides the mapping from the current state to the desired state
+
 This means that manual changes to resources in the Azure portal won't be picked up in the tfstate file
+
 This file should not be edited manually
+
 Remote state can assist with tracking the state across multiple developers
