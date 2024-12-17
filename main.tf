@@ -15,11 +15,11 @@ provider "azurerm" {
 }
 
 # each resource defines a component of the architecture
-# the two text fields are the resource type and the resource name
+# the two text fields are the resource type and the local resource name to be referenced in this file
 # these are combined for the ID - azurerm_resource_group.rg
 resource "azurerm_resource_group" "rg" {
   name     = var.resource_group_name
-  location = "westus2"
+  location = "uksouth"
   tags = {
     Environment = "Terraform Getting Started"
     Team        = "DevOps"
@@ -29,8 +29,22 @@ resource "azurerm_resource_group" "rg" {
 # adding vnet to be contained within the rg
 # terraform recognises the dependency and creates the resources in order
 resource "azurerm_virtual_network" "vnet" {
-  name                = "myTFVnet"
+  name                = "vnet-terraform-learn"
   address_space       = ["10.0.0.0/16"]
-  location            = "westus2"
+  location            = "uksouth"
   resource_group_name = azurerm_resource_group.rg.name
+}
+
+resource "azurerm_storage_account" "sa" {
+  name                     = "saterraformlearn"
+  resource_group_name      = azurerm_resource_group.rg.name
+  location                 = azurerm_resource_group.rg.location
+  account_tier             = "Standard"
+  account_replication_type = "LRS"
+}
+
+resource "azurerm_storage_container" "sc" {
+  name                  = "container"
+  storage_account_name  = azurerm_storage_account.sa.name
+  container_access_type = "private"
 }
